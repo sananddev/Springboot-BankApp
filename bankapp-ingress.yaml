@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bankapp-ingress
+  namespace: bankapp-namespace
+spec:
+  tls:
+  - hosts:
+    - megaproject.sandeeppokhrel.cloud
+    secretName: bankapp-tls-secret
+  ingressClassName: nginx
+  rules:
+  - host: megaproject.sandeeppokhrel.cloud
+    http:
+       paths:
+       - path: /
+         pathType: Prefix
+         backend:
+          service:
+            name: bankapp-service
+            port:
+              number: 8080
+       - path: /nginx
+         pathType: Prefix
+         backend:
+           service:
+             name: nginx-service
+             port:
+               number: 80
